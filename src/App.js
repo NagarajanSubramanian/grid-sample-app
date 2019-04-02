@@ -5,7 +5,8 @@ import Dialog from './components/dialog/dialog';
 import Toastr from './components/toastr/toastr';
 import NewApplication from './components/newApplication/newApplication';
 import EmptyData from './components/emptydata/emptyData';
-import SearchData from './components/searchgroup/searchGroup'
+import SearchData from './components/searchgroup/searchGroup';
+import MaintanenceImage from './maintenance.jpg';
 
 import {addEmployee, loadEmployee} from './redux/action/action';
 import { connect } from 'react-redux';
@@ -31,7 +32,7 @@ class App extends Component {
       emptyDataDescription: 'Add new data using + button',
       dialogShow: false,
       gridShow: false,
-      screenShow: false,
+      screenShow: 'server',
       searchDisable: true
     };
     this.onToastrClick = this.onToastrClick.bind(this);
@@ -118,19 +119,23 @@ class App extends Component {
   }
 
   componentWillMount(){
+    var responseData = false;
     fetch('http://localhost:2030/findAllEmployeeData', {
       headers,
       method: 'POST',
       body: ''
     }).then(response => {
-      response.json().then(function(data){
+      return response.json().then(function(data){
+        responseData = true;
         this.props.loadEmployee(JSON.parse(data));
         var gridLengthFlag = JSON.parse(data).length > 0;
         this.setState({gridShow:gridLengthFlag ? true : false, 
-          emptyDataShow: gridLengthFlag ? false: true, screenShow:true,
+          emptyDataShow: gridLengthFlag ? false: true,
           searchDisable:gridLengthFlag?false:true} )
       }.bind(this));
-    }); 
+    }).finally(function(){
+      this.setState({screenShow: responseData ? 'true' : 'maintanence'})
+    }.bind(this)); 
   }
   
   dialogCancelClick(){
@@ -148,8 +153,10 @@ class App extends Component {
   
   render() {
     const { employeeData } = this.props;
-    if(!this.state.screenShow){
+    if(this.state.screenShow == 'server'){
       return(<div className='loader'></div>)
+    } else if(this.state.screenShow == 'maintanence'){
+      return(<div className='maintanenceClass'><label className='labelMaintanence'>Under Maintanence</label></div>)
     } else {
       return (
       <React.Fragment>
