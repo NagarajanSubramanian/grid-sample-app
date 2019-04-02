@@ -1,0 +1,16 @@
+.newApplication{
+    position: fixed;
+    right: 23px;
+    bottom: 23px;
+}
+.newApplicationButton{
+  font-size: 35px;
+  border-radius: 100%;
+  outline: 0;
+  width: 45px;
+  height: 44px;
+  background-color: orangered;
+  border: none;
+  cursor: pointer;
+  color: white;
+}

@@ -1,0 +1,13 @@
+.gridDiv{
+    width: 50%;
+    margin: auto;
+    text-align: -webkit-center;
+    margin-top:8px;
+}
+
+table{
+    border: 1px solid #dddddd;
+    border-collapse: collapse;
+    background-color: white;
+    max-height: 50%;
+}
