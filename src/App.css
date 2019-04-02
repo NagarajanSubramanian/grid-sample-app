@@ -5,6 +5,7 @@ body{
     height: 100%;
     position: absolute;
     background-color: burlywood;
+    margin: 0;
 }
 
 @keyframes spin {
